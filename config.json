@@ -1,60 +1,95 @@
 {
   "title": "PIMIENTA ROSA",
-  "handle": "@pimienta_rosaaa",
-  "bio": "Indumentaria femenina y masculina · Estilo urbano y casual",
-  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80",
-  "banner": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
-  "theme": "pimienta-rosa",
-  "pattern": "dots",
-  "btnStyle": "soft",
-  "branchCols": 2,
-  "patternSize": 26,
-  "radius": 20,
-  "branchesTitle": "Sucursales",
+  "handle": "@pimienta_rosaaa | 113 mil seguidores | 21,1 mil publicaciones",
+  "bio": "Ropa (marca) | MAYORISTA N°1 SAN JUAN | + 8.000 RESEÑAS 5 estrellas | Tu esencia, tu estilo | Bebé, Niños y Mujer",
+  "banner": "https://picsum.photos/680/175",
+  "avatar": "https://picsum.photos/200/200",
+  "branchesTitle": "Nuestras Sucursales - Villa Krause, San Juan",
   "links": [
     {
-      "label": "WhatsApp Consultas",
-      "sub": "Atención directa",
-      "url": "https://wa.me/5493410000000",
-      "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=300&q=80",
-      "symbol": "sym-chat"
-    },
-    {
       "label": "Instagram Oficial",
-      "sub": "@pimienta_rosaaa",
-      "url": "https://instagram.com/pimienta_rosaaa",
-      "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=300&q=80",
-      "symbol": "sym-camera"
+      "sub": "@pimienta_rosaaa - 113 mil seguidores",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "camera",
+      "image": ""
     },
     {
-      "label": "Nueva Temporada",
-      "sub": "Prendas y básicos",
-      "url": "https://instagram.com",
-      "image": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=80",
-      "symbol": "sym-tag"
+      "label": "Canal de WhatsApp",
+      "sub": "Nuevos ingresos y promos",
+      "url": "https://whatsapp.com/channel/0029Vb5e0ML1iUxgEryBDR1W",
+      "icon": "chat",
+      "image": ""
     },
     {
-      "label": "Sumate al Equipo",
-      "sub": "Entrevistas 9:30 a 12:00 h",
-      "url": "#branches-section",
-      "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=80",
-      "symbol": "sym-bag"
+      "label": "Bebé",
+      "sub": "Colección Bebé",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "heart",
+      "image": ""
+    },
+    {
+      "label": "Niños",
+      "sub": "Colección Niños",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "bag",
+      "image": ""
+    },
+    {
+      "label": "Nuevos Ingresos",
+      "sub": "Conjunto Deportivo $6.999 | Short $4.999",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "tag",
+      "image": ""
+    },
+    {
+      "label": "Ropa Interior - Promos",
+      "sub": "Top Bandó, Corset, Cintos Caballos",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "store",
+      "image": ""
+    },
+    {
+      "label": "Clientes - Reseñas",
+      "sub": "+ 8.000 reseñas 5 estrellas",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "heart",
+      "image": ""
+    },
+    {
+      "label": "Sumate a Nuestro Equipo",
+      "sub": "Búsqueda de Personal - Etiquetado y Atención al público",
+      "url": "https://www.instagram.com/pimienta_rosaaa/",
+      "icon": "link",
+      "image": ""
     }
   ],
   "branches": [
     {
-      "name": "Boulevard y Mendoza",
-      "address": "Bv. y Mendoza",
-      "hours": "Lun a Sáb · 9:30 a 12:00 h",
-      "mapUrl": "https://maps.google.com/?q=Boulevard+y+Mendoza",
-      "image": "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=600&q=80"
+      "name": "Pimienta Rosa - Casa Central",
+      "address": "Torino 599 OESTE, Villa Krause, Rawson, San Juan, Argentina",
+      "hours": "Lunes a Sábado - Entrevistas 9:30 a 12:00 hs",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Torino+599+Oeste+Villa+Krause+Rawson+San+Juan",
+      "photo": "https://picsum.photos/400/200"
     },
     {
-      "name": "Sucursal Centro",
-      "address": "Peatonal y San Martín",
-      "hours": "Lun a Sáb · 9:00 a 19:30 h",
-      "mapUrl": "https://maps.google.com/?q=Centro+comercial",
-      "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80"
+      "name": "Pimienta Rosa - Boulevard y San Roque",
+      "address": "Boulevard y San Roque, Villa Krause, Rawson, San Juan, Argentina",
+      "hours": "Lunes a Sábado 9:30 a 12:00 hs",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Boulevard+y+San+Roque+Villa+Krause+San+Juan",
+      "photo": "https://picsum.photos/400/201"
+    },
+    {
+      "name": "Pimienta Rosa Boutique",
+      "address": "Boulevard y Mendoza, Villa Krause, Rawson, San Juan, Argentina",
+      "hours": "Lunes a Sábado 9:30 a 12:00 hs",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Boutique+Boulevard+y+Mendoza+Villa+Krause+San+Juan",
+      "photo": "https://picsum.photos/400/202"
     }
-  ]
+  ],
+  "theme": {
+    "primary": "#D81B60",
+    "bg": "#FFF5F7",
+    "pattern": "dots",
+    "btnStyle": "soft"
+  }
 }
