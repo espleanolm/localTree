@@ -3,331 +3,278 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Título — Linktree</title>
+<title>PIMIENTA ROSA — Linktree</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Poppins:wght@600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --surface: #ffffff;
-    --surface-2: #f2f2f2;
-    --text: #1a1a1a;
-    --muted: #666666;
-    --primary: #111111;
-    --primary-dark: #000000;
-    --primary-soft: rgba(0, 0, 0, 0.08);
-    --accent: #888888;
-    --border: rgba(0, 0, 0, 0.12);
-    --radius: 20px;
-    --btn-radius: 14px;
-    --pattern-color: rgba(0, 0, 0, 0.07);
-    --pattern-size: 26px;
-    --pattern-opacity: 1;
-    --branch-cols: 2;
+  :root{
+    --bg:#FFF5F7; --surface:#ffffff; --surface-2:#FFF0F3; --text:#1F1A1C; --muted:#7A6A70;
+    --primary:#D81B60; --primary-dark:#AD1457; --primary-soft:rgba(216,27,96,.10);
+    --accent:#FF8FB1; --accent-2:#FFC2D4; --border:rgba(31,26,28,.09);
+    --radius:24px; --btn-radius:16px; --card-radius:20px; --avatar-radius:50%;
+    --pattern-color:rgba(216,27,96,.10); --pattern-size:28px; --pattern-opacity:.9;
+    --shadow:0 18px 40px rgba(216,27,96,.10); --shadow-hover:0 22px 48px rgba(216,27,96,.16);
+    --font:'Inter',system-ui,sans-serif; --title-font:'Poppins',sans-serif;
+    --branch-cols:2; --btn-padding:14px;
   }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); min-height: 100vh; position: relative; overflow-x: hidden; line-height: 1.45; }
-  .pattern-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: var(--pattern-opacity); }
-  body[data-pattern="none"] .pattern-layer { background-image: none; }
-  body[data-pattern="dots"] .pattern-layer { background-image: radial-gradient(var(--pattern-color) 2px, transparent 2px); background-size: var(--pattern-size) var(--pattern-size); }
-  body[data-pattern="grid"] .pattern-layer { background-image: linear-gradient(to right, var(--pattern-color) 1px, transparent 1px), linear-gradient(to bottom, var(--pattern-color) 1px, transparent 1px); background-size: var(--pattern-size) var(--pattern-size); }
-  body[data-pattern="diagonal"] .pattern-layer { background-image: repeating-linear-gradient(45deg, var(--pattern-color) 0, var(--pattern-color) 2px, transparent 2px, transparent var(--pattern-size)); }
-  body[data-pattern="weave"] .pattern-layer { background-image: repeating-linear-gradient(0deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent var(--pattern-size)), repeating-linear-gradient(90deg, var(--pattern-color) 0, var(--pattern-color) 1px, transparent 1px, transparent calc(var(--pattern-size) * 1.5)); }
-  .app-shell { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 20px 16px 72px; }
-  .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: visible; box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
-  .banner-box { position: relative; height: 175px; border-top-left-radius: var(--radius); border-top-right-radius: var(--radius); overflow: hidden; background: linear-gradient(135deg, var(--primary), var(--accent)); }
-  .banner-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .banner-scrim { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.34)); pointer-events: none; }
-  .avatar-holder { position: relative; display: flex; justify-content: center; margin-top: -54px; z-index: 3; }
-  .avatar-frame { width: 108px; height: 108px; border-radius: 50%; border: 4px solid var(--surface); background: var(--surface-2); box-shadow: 0 8px 20px rgba(0,0,0,0.14); overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .avatar-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .profile-body { padding: 12px 22px 24px; text-align: center; }
-  .brand-title { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
-  .brand-handle { margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--primary); }
-  .brand-bio { margin-top: 10px; font-size: 14px; color: var(--muted); max-width: 520px; margin-left: auto; margin-right: auto; }
-  .links-list { margin-top: 20px; display: flex; flex-direction: column; gap: 11px; text-align: left; }
-  .link-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; text-decoration: none; padding: 12px 14px; border-radius: var(--btn-radius); border: 1px solid var(--border); background: var(--surface-2); color: var(--text); }
-  .link-item:hover { transform: translateY(-2px); border-color: var(--primary); }
-  body[data-btn-style="solid"] .link-item { background: var(--primary); color: #fff; border-color: var(--primary); }
-  body[data-btn-style="solid"] .link-item:hover { background: var(--primary-dark); }
-  body[data-btn-style="outline"] .link-item { background: transparent; border: 1.5px solid var(--primary); }
-  body[data-btn-style="outline"] .link-item:hover { background: var(--primary-soft); }
-  .link-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .link-thumb { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
-  .link-symbol { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--primary-soft); color: var(--primary); }
-  body[data-btn-style="solid"] .link-symbol { background: rgba(255,255,255,0.2); color: #fff; }
-  .link-text-wrap { min-width: 0; }
-  .link-label { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .link-sub { font-size: 12px; opacity: .78; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .link-arrow { flex-shrink: 0; opacity: .8; }
-  .branches-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); text-align: left; }
-  .section-heading { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800; margin-bottom: 12px; }
-  .section-heading svg { color: var(--primary); }
-  .branches-grid { display: grid; grid-template-columns: repeat(var(--branch-cols), minmax(0,1fr)); gap: 12px; }
-  @media (max-width: 560px) { .branches-grid { grid-template-columns: 1fr; } }
-  .branch-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: calc(var(--btn-radius) + 2px); overflow: hidden; display: flex; flex-direction: column; }
-  .branch-photo { width: 100%; height: 112px; object-fit: cover; display: block; background: var(--primary-soft); }
-  .branch-content { padding: 11px 12px 13px; display: flex; flex-direction: column; gap: 6px; }
-  .branch-name { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 800; }
-  .branch-name svg { color: var(--primary); }
-  .branch-line { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: var(--muted); }
-  .branch-line svg { color: var(--primary); margin-top: 2px; }
-  .branch-map-btn { margin-top: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; background: var(--primary); color: #fff; font-size: 12px; font-weight: 700; padding: 7px 10px; border-radius: 9px; }
-  .branch-map-btn:hover { background: var(--primary-dark); }
-  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.58); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
-  .modal-backdrop.open { display: flex; }
-  .modal-card { width: 100%; max-width: 380px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; box-shadow: 0 20px 44px rgba(0,0,0,0.25); }
-  .modal-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 800; margin-bottom: 12px; }
-  .modal-title svg { color: var(--primary); }
-  .field-input, .field-select, .field-textarea { width: 100%; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.2); background: #fff; color: #1a1a1a; font-size: 13px; font-family: inherit; }
-  .field-textarea { min-height: 64px; resize: vertical; }
-  .field-input:focus, .field-select:focus, .field-textarea:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
-  .error-msg { margin-top: 8px; font-size: 12px; font-weight: 700; color: #b91c1c; min-height: 16px; }
-  .modal-actions { margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px; }
-  .btn-secondary, .btn-primary, .btn-danger, .btn-small { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; padding: 9px 13px; font-family: inherit; }
-  .btn-secondary { background: #eee; color: #1a1a1a; }
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:hover { background: var(--primary-dark); }
-  .btn-danger { background: #fee2e2; color: #b91c1c; }
-  .btn-small { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
-  .editor-panel { display: none; margin-top: 18px; background: var(--surface); border: 2px solid var(--primary); border-radius: var(--radius); padding: 18px; }
-  .editor-panel.active { display: block; }
-  .editor-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
-  .editor-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 800; }
-  .editor-title svg { color: var(--primary); }
-  .editor-block { margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.08); }
-  .editor-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .block-label { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 800; margin-bottom: 10px; }
-  .block-label svg { color: var(--primary); }
-  .form-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
-  @media (max-width: 540px) { .form-grid-2 { grid-template-columns: 1fr; } }
-  .field-group { display: flex; flex-direction: column; gap: 4px; }
-  .field-caption { font-size: 11px; font-weight: 700; color: #666; }
-  .item-editor-card { background: #f7f7f7; border: 1px solid var(--border); border-radius: 12px; padding: 11px; margin-bottom: 10px; }
-  .item-editor-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 12px; font-weight: 800; }
-  .config-file-box { background: #1a1a1a; color: #fff; border-radius: 12px; padding: 12px; margin-top: 10px; }
-  .config-file-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; font-size: 12px; font-weight: 700; }
-  .config-code-area { width: 100%; min-height: 150px; background: #111; color: #ddd; border: 1px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 10px; font-family: ui-monospace, monospace; font-size: 11.5px; line-height: 1.4; resize: vertical; }
-  .toast-msg { margin-top: 8px; font-size: 12px; font-weight: 700; color: #15803d; min-height: 16px; }
-  .hidden-admin { position: fixed; bottom: 6px; right: 8px; width: 22px; height: 22px; opacity: 0.08; border: none; background: transparent; cursor: pointer; z-index: 40; font-size: 14px; }
-  .hidden-admin:hover { opacity: 0.4; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;position:relative;overflow-x:hidden;line-height:1.5}
+  body::before{content:"";position:fixed;inset:0;z-index:0;background:radial-gradient(600px 300px at 10% 0%, var(--accent-2) 0%, transparent 60%),radial-gradient(600px 300px at 90% 10%, var(--primary-soft) 0%, transparent 60%);opacity:.55;pointer-events:none}
+  .pattern-layer{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--pattern-opacity)}
+  body[data-pattern="none"] .pattern-layer{background:none}
+  body[data-pattern="dots"] .pattern-layer{background-image:radial-gradient(var(--pattern-color) 2px,transparent 2px);background-size:var(--pattern-size) var(--pattern-size)}
+  body[data-pattern="grid"] .pattern-layer{background-image:linear-gradient(to right,var(--pattern-color) 1px,transparent 1px),linear-gradient(to bottom,var(--pattern-color) 1px,transparent 1px);background-size:var(--pattern-size) var(--pattern-size)}
+  body[data-pattern="diagonal"] .pattern-layer{background-image:repeating-linear-gradient(45deg,var(--pattern-color) 0,var(--pattern-color) 2px,transparent 2px,transparent var(--pattern-size))}
+  body[data-pattern="weave"] .pattern-layer{background-image:repeating-linear-gradient(0deg,var(--pattern-color) 0,var(--pattern-color) 1px,transparent 1px,transparent var(--pattern-size)),repeating-linear-gradient(90deg,var(--pattern-color) 0,var(--pattern-color) 1px,transparent 1px,transparent calc(var(--pattern-size)*1.5))}
+  body[data-pattern="hearts"] .pattern-layer{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 26 6 16a5 5 0 0 1 7-7l3 3 3-3a5 5 0 0 1 7 7Z' fill='%23D81B60' fill-opacity='.08'/%3E%3C/svg%3E");background-size:36px 36px}
+  .app-shell{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:22px 16px 80px}
+  .profile-card{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.88));backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:var(--radius);overflow:visible;box-shadow:var(--shadow)}
+  body[data-card="flat"] .profile-card{box-shadow:none}
+  body[data-card="border"] .profile-card{box-shadow:none;border:2px solid var(--primary)}
+  body[data-card="glow"] .profile-card{box-shadow:0 0 0 1px var(--primary-soft),0 24px 60px rgba(216,27,96,.22)}
+  .banner-box{position:relative;height:185px;border-top-left-radius:var(--radius);border-top-right-radius:var(--radius);overflow:hidden;background:linear-gradient(135deg,var(--primary),var(--accent))}
+  .banner-box img{width:100%;height:100%;object-fit:cover;display:block}
+  .banner-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.02),rgba(0,0,0,.38));pointer-events:none}
+  .badge-top{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:6px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;display:flex;gap:6px;align-items:center;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+  .badge-top i{width:7px;height:7px;border-radius:50%;background:#22c55e;display:block}
+  .avatar-holder{position:relative;display:flex;justify-content:center;margin-top:-56px;z-index:3}
+  .avatar-frame{width:112px;height:112px;border-radius:var(--avatar-radius);border:4px solid #fff;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.16);overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .avatar-frame img{width:100%;height:100%;object-fit:cover}
+  .profile-body{padding:14px 22px 24px;text-align:center}
+  .brand-title{font-family:var(--title-font);font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .brand-handle{margin-top:4px;font-size:13px;font-weight:700;color:var(--primary);background:var(--primary-soft);display:inline-block;padding:4px 10px;border-radius:999px}
+  .brand-bio{margin:12px auto 0;font-size:14px;color:var(--muted);max-width:520px}
+  .stats-row{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .stat{ background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:8px 12px;font-size:12px;font-weight:700;display:flex;gap:6px;align-items:center}
+  .stat b{color:var(--primary)}
+  .links-list{margin-top:20px;display:flex;flex-direction:column;gap:12px;text-align:left}
+  .link-item{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;padding:var(--btn-padding) 14px;border-radius:var(--btn-radius);border:1px solid var(--border);background:#fff;color:var(--text);box-shadow:0 4px 14px rgba(0,0,0,.04);transition:.18s}
+  .link-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:var(--primary)}
+  body[data-btn-style="solid"] .link-item{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-color:transparent}
+  body[data-btn-style="outline"] .link-item{background:transparent;border:1.5px solid var(--primary)}
+  body[data-btn-style="glass"] .link-item{background:rgba(255,255,255,.72);backdrop-filter:blur(10px)}
+  body[data-btn-style="gradient"] .link-item{background:linear-gradient(135deg,var(--primary-soft),#fff);border-color:var(--primary-soft)}
+  .link-left{display:flex;align-items:center;gap:12px;min-width:0}
+  .link-thumb{width:44px;height:44px;border-radius:12px;object-fit:cover;flex-shrink:0}
+  .link-symbol{width:38px;height:38px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--primary-soft);color:var(--primary)}
+  body[data-btn-style="solid"] .link-symbol{background:rgba(255,255,255,.22);color:#fff}
+  .link-label{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .link-sub{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .link-arrow{flex-shrink:0;opacity:.7}
+  .branches-section{margin-top:26px;padding-top:20px;border-top:1px solid var(--border);text-align:left}
+  .section-heading{display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:800;margin-bottom:12px}
+  .section-heading span:first-child{display:flex;align-items:center;gap:8px}
+  .section-heading svg{color:var(--primary)}
+  .branches-grid{display:grid;grid-template-columns:repeat(var(--branch-cols),minmax(0,1fr));gap:14px}
+  @media(max-width:560px){.branches-grid{grid-template-columns:1fr}}
+  .branch-card{background:#fff;border:1px solid var(--border);border-radius:var(--card-radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 20px rgba(0,0,0,.05);transition:.18s}
+  .branch-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+  .branch-photo{width:100%;height:128px;object-fit:cover;display:block}
+  .branch-content{padding:12px 13px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .branch-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800}
+  .branch-name svg{color:var(--primary)}
+  .branch-rating{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700}
+  .branch-rating .stars{color:#F59E0B;letter-spacing:1px}
+  .branch-line{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--muted)}
+  .branch-line svg{color:var(--primary);margin-top:2px;flex-shrink:0}
+  .branch-actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:8px}
+  .branch-map-btn,.branch-rate-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-size:12px;font-weight:800;padding:9px 8px;border-radius:10px;border:none;cursor:pointer}
+  .branch-map-btn{background:var(--primary);color:#fff}
+  .branch-map-btn:hover{background:var(--primary-dark)}
+  .branch-rate-btn{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A}
+  .branch-rate-btn:hover{background:#FDE68A}
+  /* Modal + Editor */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+  .modal-backdrop.open{display:flex}
+  .modal-card{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:20px;box-shadow:0 20px 44px rgba(0,0,0,.25)}
+  .modal-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;margin-bottom:12px}
+  .field-input,.field-select,.field-textarea{width:100%;padding:9px 11px;border-radius:10px;border:1px solid rgba(0,0,0,.18);background:#fff;color:#1a1a1a;font-size:13px;font-family:inherit}
+  .field-textarea{min-height:64px;resize:vertical}
+  .error-msg{margin-top:8px;font-size:12px;font-weight:700;color:#b91c1c;min-height:16px}
+  .modal-actions{margin-top:14px;display:flex;justify-content:flex-end;gap:8px}
+  .btn-secondary,.btn-primary,.btn-danger,.btn-small{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:none;padding:9px 13px;font-family:inherit}
+  .btn-secondary{background:#eee;color:#1a1a1a}.btn-primary{background:var(--primary);color:#fff}.btn-danger{background:#fee2e2;color:#b91c1c}.btn-small{padding:6px 10px;font-size:12px;border-radius:8px}
+  .editor-panel{display:none;margin-top:18px;background:#fff;border:2px solid var(--primary);border-radius:var(--radius);padding:18px}
+  .editor-panel.active{display:block}
+  .editor-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:16px}
+  .editor-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800}
+  .editor-block{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(0,0,0,.08)}
+  .block-label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;margin-bottom:10px}
+  .form-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  @media(max-width:540px){.form-grid-2{grid-template-columns:1fr}}
+  .field-group{display:flex;flex-direction:column;gap:4px}
+  .field-caption{font-size:11px;font-weight:700;color:#666}
+  .item-editor-card{background:#f7f7f7;border:1px solid var(--border);border-radius:12px;padding:11px;margin-bottom:10px}
+  .item-editor-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:12px;font-weight:800}
+  .range-row{display:flex;gap:8px;align-items:center}
+  .range-row input[type=range]{flex:1}
+  .config-file-box{background:#1a1a1a;color:#fff;border-radius:12px;padding:12px;margin-top:10px}
+  .config-file-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:12px;font-weight:700}
+  .config-code-area{width:100%;min-height:150px;background:#111;color:#ddd;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:10px;font-family:ui-monospace,monospace;font-size:11.5px;line-height:1.4;resize:vertical}
+  .toast-msg{margin-top:8px;font-size:12px;font-weight:700;color:#15803d;min-height:16px}
+  .hidden-admin{position:fixed;bottom:6px;right:8px;width:22px;height:22px;opacity:.08;border:none;background:transparent;cursor:pointer;z-index:40;font-size:14px}
 </style>
 </head>
-<body data-pattern="dots" data-btn-style="soft">
-  <div class="pattern-layer" aria-hidden="true"></div>
-  <svg width="0" height="0" style="position:absolute;visibility:hidden;" aria-hidden="true">
-    <defs>
-      <symbol id="sym-store" viewBox="0 0 24 24"><path d="M4 4h16l1.5 5.5a3.2 3.2 0 0 1-3.1 4h-.4V20h-3v-5H9v5H6v-6.5h-.4a3.2 3.2 0 0 1-3.1-4L4 4Z" /></symbol>
-      <symbol id="sym-bag" viewBox="0 0 24 24"><path d="M6 7h2V6a4 4 0 0 1 8 0v1h2l1 14H5L6 7Zm4 0h4V6a2 2 0 0 0-4 0v1Z" /></symbol>
-      <symbol id="sym-tag" viewBox="0 0 24 24"><path d="M12.5 3H21v8.5L11 21.5 2.5 13 12.5 3Zm4.5 3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" /></symbol>
-      <symbol id="sym-heart" viewBox="0 0 24 24"><path d="M12 20.5 3.5 12a5 5 0 0 1 7.1-7L12 6.4l1.4-1.4a5 5 0 0 1 7.1 7L12 20.5Z" /></symbol>
-      <symbol id="sym-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" /></symbol>
-      <symbol id="sym-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 10.6 4.2 2.5-1 1.7L11 13.7V7h2v5.6Z" /></symbol>
-      <symbol id="sym-chat" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.9 13.3L3 21l4.9-1.1A9 9 0 1 0 12 3Z" /></symbol>
-      <symbol id="sym-camera" viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.5L15 4H9Zm3 5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z" /></symbol>
-      <symbol id="sym-lock" viewBox="0 0 24 24"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4V7Z" /></symbol>
-      <symbol id="sym-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18h1.5a2 2 0 0 0 0-4H12a2 2 0 0 1-2-2c0-1.1.9-2 2-2h4a5 5 0 0 0 0-10h-4Zm-3.5 6A1.5 1.5 0 1 1 7 7.5 1.5 1.5 0 0 1 8.5 9Zm4-2A1.5 1.5 0 1 1 11 5.5 1.5 1.5 0 0 1 12.5 7Zm4 2A1.5 1.5 0 1 1 15 7.5 1.5 1.5 0 0 1 16.5 9Z" /></symbol>
-      <symbol id="sym-link" viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l2.8-2.8a1 1 0 0 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0Zm-2.1 5.1a4 4 0 0 1 0-5.7l2.1-2.1 1.4 1.4-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1 1.4 1.4-2.1 2.1a4 4 0 0 1-5.6.1Zm4.9-11.3 2.1-2.1a4 4 0 0 1 5.7 5.7l-2.1 2.1-1.4-1.4 2.1-2.1a2 2 0 0 0-2.8-2.8l-2.1 2.1-1.4-1.4Z" /></symbol>
-      <symbol id="sym-arrow" viewBox="0 0 24 24"><path d="M13 5l7 7-7 7v-4H4v-6h9V5Z" /></symbol>
-      <symbol id="sym-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z" /></symbol>
-      <symbol id="sym-download" viewBox="0 0 24 24"><path d="M11 3h2v10l3.5-3.5 1.4 1.4L12 16.8l-5.9-5.9 1.4-1.4L11 13V3ZM4 19h16v2H4v-2Z" /></symbol>
-      <symbol id="sym-upload" viewBox="0 0 24 24"><path d="M11 17h2V7l3.5 3.5 1.4-1.4L12 3.2 6.1 9.1l1.4 1.4L11 7v10ZM4 19h16v2H4v-2Z" /></symbol>
-      <symbol id="sym-trash" viewBox="0 0 24 24"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm-3 6h12l-1 12H7L6 9Z" /></symbol>
-    </defs>
-  </svg>
+<body data-pattern="dots" data-btn-style="gradient" data-card="soft">
+<div class="pattern-layer"></div>
+<svg width="0" height="0" style="position:absolute;visibility:hidden"><defs>
+<symbol id="sym-store" viewBox="0 0 24 24"><path d="M4 4h16l1.5 5.5a3.2 3.2 0 0 1-3.1 4h-.4V20h-3v-5H9v5H6v-6.5h-.4a3.2 3.2 0 0 1-3.1-4L4 4Z"/></symbol>
+<symbol id="sym-bag" viewBox="0 0 24 24"><path d="M6 7h2V6a4 4 0 0 1 8 0v1h2l1 14H5L6 7Zm4 0h4V6a2 2 0 0 0-4 0v1Z"/></symbol>
+<symbol id="sym-tag" viewBox="0 0 24 24"><path d="M12.5 3H21v8.5L11 21.5 2.5 13 12.5 3Zm4.5 3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></symbol>
+<symbol id="sym-heart" viewBox="0 0 24 24"><path d="M12 20.5 3.5 12a5 5 0 0 1 7.1-7L12 6.4l1.4-1.4a5 5 0 0 1 7.1 7L12 20.5Z"/></symbol>
+<symbol id="sym-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></symbol>
+<symbol id="sym-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 10.6 4.2 2.5-1 1.7L11 13.7V7h2v5.6Z"/></symbol>
+<symbol id="sym-chat" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.9 13.3L3 21l4.9-1.1A9 9 0 1 0 12 3Z"/></symbol>
+<symbol id="sym-camera" viewBox="0 0 24 24"><path d="M9 4 7.5 6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.5L15 4H9Zm3 5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"/></symbol>
+<symbol id="sym-lock" viewBox="0 0 24 24"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4V7Z"/></symbol>
+<symbol id="sym-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18h1.5a2 2 0 0 0 0-4H12a2 2 0 0 1-2-2c0-1.1.9-2 2-2h4a5 5 0 0 0 0-10h-4Zm-3.5 6A1.5 1.5 0 1 1 7 7.5 1.5 1.5 0 0 1 8.5 9Zm4-2A1.5 1.5 0 1 1 11 5.5 1.5 1.5 0 0 1 12.5 7Zm4 2A1.5 1.5 0 1 1 15 7.5 1.5 1.5 0 0 1 16.5 9Z"/></symbol>
+<symbol id="sym-link" viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l2.8-2.8a1 1 0 0 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0Zm-2.1 5.1a4 4 0 0 1 0-5.7l2.1-2.1 1.4 1.4-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1 1.4 1.4-2.1 2.1a4 4 0 0 1-5.6.1Zm4.9-11.3 2.1-2.1a4 4 0 0 1 5.7 5.7l-2.1 2.1-1.4-1.4 2.1-2.1a2 2 0 0 0-2.8-2.8l-2.1 2.1-1.4-1.4Z"/></symbol>
+<symbol id="sym-arrow" viewBox="0 0 24 24"><path d="M13 5l7 7-7 7v-4H4v-6h9V5Z"/></symbol>
+<symbol id="sym-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/></symbol>
+<symbol id="sym-star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></symbol>
+<symbol id="sym-trash" viewBox="0 0 24 24"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm-3 6h12l-1 12H7L6 9Z"/></symbol>
+</defs></svg>
 
-  <div class="app-shell">
-    <main class="profile-card">
-      <div class="banner-box"><img id="view-banner" alt="Banner" /><div class="banner-scrim"></div></div>
-      <div class="avatar-holder"><div class="avatar-frame"><img id="view-avatar" alt="Perfil" /></div></div>
-      <div class="profile-body">
-        <h1 class="brand-title" id="view-title"></h1>
-        <p class="brand-handle" id="view-handle"></p>
-        <p class="brand-bio" id="view-bio"></p>
-        <nav class="links-list" id="view-links"></nav>
-        <section class="branches-section" id="branches-section">
-          <h2 class="section-heading"><svg width="17" height="17" fill="currentColor"><use href="#sym-pin"></use></svg><span id="view-branches-title"></span></h2>
-          <div class="branches-grid" id="view-branches"></div>
-        </section>
-      </div>
-    </main>
+<div class="app-shell">
+<main class="profile-card">
+<div class="banner-box"><img id="view-banner"><div class="banner-scrim"></div><div class="badge-top"><i></i> ABIERTO HOY • VILLA KRAUSE</div></div>
+<div class="avatar-holder"><div class="avatar-frame"><img id="view-avatar"></div></div>
+<div class="profile-body">
+<h1 class="brand-title" id="view-title"></h1>
+<div><span class="brand-handle" id="view-handle"></span></div>
+<p class="brand-bio" id="view-bio"></p>
+<div class="stats-row"><div class="stat">⭐ <b>5.0</b> • +8.000 reseñas</div><div class="stat">👥 113 mil seguidores</div><div class="stat">📍 3 sucursales</div></div>
+<nav class="links-list" id="view-links"></nav>
+<section class="branches-section"><h2 class="section-heading"><span><svg width="17" height="17" fill="currentColor"><use href="#sym-pin"/></svg><span id="view-branches-title"></span></span><span style="font-size:12px;color:var(--muted);font-weight:600">Calificá tu sucursal ⭐</span></h2><div class="branches-grid" id="view-branches"></div></section>
+</div>
+</main>
 
-    <section class="editor-panel" id="editor-panel">
-      <div class="editor-header">
-        <div class="editor-title"><svg width="18" height="18" fill="currentColor"><use href="#sym-palette"></use></svg><span>Panel de Configuración</span></div>
-        <button type="button" class="btn-secondary btn-small" id="btn-lock-panel"><svg width="14" height="14" fill="currentColor"><use href="#sym-lock"></use></svg><span>Bloquear</span></button>
-      </div>
-      <div class="editor-block">
-        <div class="block-label"><svg width="15" height="15" fill="currentColor"><use href="#sym-store"></use></svg> Perfil</div>
-        <div class="form-grid-2">
-          <div class="field-group"><span class="field-caption">Título</span><input class="field-input" id="edit-title" /></div>
-          <div class="field-group"><span class="field-caption">Subtítulo</span><input class="field-input" id="edit-handle" /></div>
-          <div class="field-group" style="grid-column:1/-1"><span class="field-caption">Mensaje</span><textarea class="field-textarea" id="edit-bio"></textarea></div>
-          <div class="field-group"><span class="field-caption">URL Banner</span><input class="field-input" id="edit-banner" /></div>
-          <div class="field-group"><span class="field-caption">URL Avatar</span><input class="field-input" id="edit-avatar" /></div>
-        </div>
-      </div>
-      <div class="editor-block">
-        <div class="block-label"><svg width="15" height="15" fill="currentColor"><use href="#sym-link"></use></svg> Botones / Enlaces</div>
-        <div id="links-editor"></div>
-        <button type="button" class="btn-secondary btn-small" id="btn-add-link"><svg width="13" height="13" fill="currentColor"><use href="#sym-plus"></use></svg> Añadir botón</button>
-      </div>
-      <div class="editor-block">
-        <div class="block-label"><svg width="15" height="15" fill="currentColor"><use href="#sym-pin"></use></svg> Sucursales</div>
-        <div class="field-group" style="margin-bottom:10px"><span class="field-caption">Título de sección</span><input class="field-input" id="edit-branches-title" /></div>
-        <div id="branches-editor"></div>
-        <button type="button" class="btn-secondary btn-small" id="btn-add-branch"><svg width="13" height="13" fill="currentColor"><use href="#sym-plus"></use></svg> Añadir sucursal</button>
-      </div>
-      <div class="editor-block">
-        <div class="block-label"><svg width="15" height="15" fill="currentColor"><use href="#sym-palette"></use></svg> Diseño</div>
-        <div class="form-grid-2">
-          <div class="field-group"><span class="field-caption">Color principal</span><input type="color" class="field-input" id="edit-primary" /></div>
-          <div class="field-group"><span class="field-caption">Color fondo</span><input type="color" class="field-input" id="edit-bg" /></div>
-          <div class="field-group"><span class="field-caption">Patrón</span><select class="field-select" id="edit-pattern"><option value="none">Ninguno</option><option value="dots">Puntos</option><option value="grid">Cuadrícula</option><option value="diagonal">Diagonal</option><option value="weave">Tejido</option></select></div>
-          <div class="field-group"><span class="field-caption">Estilo botones</span><select class="field-select" id="edit-btn-style"><option value="soft">Suave</option><option value="solid">Sólido</option><option value="outline">Borde</option></select></div>
-        </div>
-      </div>
-      <div class="editor-block">
-        <div class="modal-actions" style="justify-content:flex-start">
-          <button type="button" class="btn-primary" id="btn-save">Guardar cambios</button>
-          <button type="button" class="btn-danger" id="btn-reset">Restablecer valores por defecto</button>
-        </div>
-        <div class="toast-msg" id="toast"></div>
-        <div class="config-file-box">
-          <div class="config-file-top"><span>config.json</span><button type="button" class="btn-secondary btn-small" id="btn-copy-config">Copiar</button></div>
-          <textarea class="config-code-area" id="config-code" readonly></textarea>
-        </div>
-      </div>
-    </section>
-  </div>
+<section class="editor-panel" id="editor-panel">
+<div class="editor-header"><div class="editor-title">🎨 Panel de Configuración Pro</div><button class="btn-secondary btn-small" id="btn-lock-panel">🔒 Bloquear</button></div>
 
-  <!-- Botón admin oculto abajo a la derecha, casi invisible -->
-  <button type="button" class="hidden-admin" id="btn-open-auth" title="Admin">•</button>
+<div class="editor-block"><div class="block-label">👤 Perfil</div>
+<div class="form-grid-2">
+<div class="field-group"><span class="field-caption">Título</span><input class="field-input" id="edit-title"></div>
+<div class="field-group"><span class="field-caption">Subtítulo</span><input class="field-input" id="edit-handle"></div>
+<div class="field-group" style="grid-column:1/-1"><span class="field-caption">Mensaje</span><textarea class="field-textarea" id="edit-bio"></textarea></div>
+<div class="field-group"><span class="field-caption">URL Banner</span><input class="field-input" id="edit-banner"></div>
+<div class="field-group"><span class="field-caption">URL Avatar</span><input class="field-input" id="edit-avatar"></div>
+</div></div>
 
-  <div class="modal-backdrop" id="auth-modal">
-    <div class="modal-card">
-      <div class="modal-title"><svg width="18" height="18" fill="currentColor"><use href="#sym-lock"></use></svg> Ingresar contraseña</div>
-      <input type="password" class="field-input" id="auth-pass" placeholder="Contraseña" autocomplete="off" value="" />
-      <div class="error-msg" id="auth-error"></div>
-      <div class="modal-actions"><button type="button" class="btn-secondary" id="btn-cancel-auth">Cancelar</button><button type="button" class="btn-primary" id="btn-confirm-auth">Entrar</button></div>
-    </div>
-  </div>
+<div class="editor-block"><div class="block-label">🔗 Botones / Enlaces</div><div id="links-editor"></div><button class="btn-secondary btn-small" id="btn-add-link">+ Añadir botón</button></div>
+
+<div class="editor-block"><div class="block-label">📍 Sucursales + Calificación</div>
+<div class="field-group" style="margin-bottom:10px"><span class="field-caption">Título de sección</span><input class="field-input" id="edit-branches-title"></div>
+<div id="branches-editor"></div><button class="btn-secondary btn-small" id="btn-add-branch">+ Añadir sucursal</button>
+<p style="font-size:11px;color:#666;margin-top:8px">💡 Para el botón Calificar: pegá el link de Google Reviews de cada sucursal. Se busca en Google Maps > Sucursal > Reseñas > Compartir.</p>
+</div>
+
+<div class="editor-block"><div class="block-label">✨ Diseño Avanzado</div>
+<div class="form-grid-2">
+<div class="field-group"><span class="field-caption">Color principal</span><input type="color" class="field-input" id="edit-primary"></div>
+<div class="field-group"><span class="field-caption">Color acento / degradado</span><input type="color" class="field-input" id="edit-accent"></div>
+<div class="field-group"><span class="field-caption">Color fondo</span><input type="color" class="field-input" id="edit-bg"></div>
+<div class="field-group"><span class="field-caption">Color texto</span><input type="color" class="field-input" id="edit-text"></div>
+<div class="field-group"><span class="field-caption">Fuente títulos</span><select class="field-select" id="edit-title-font"><option value="'Poppins',sans-serif">Poppins</option><option value="'Inter',sans-serif">Inter</option><option value="'Playfair Display',serif">Playfair Display</option></select></div>
+<div class="field-group"><span class="field-caption">Fuente cuerpo</span><select class="field-select" id="edit-font"><option value="'Inter',sans-serif">Inter</option><option value="'Poppins',sans-serif">Poppins</option><option value="system-ui">Sistema</option></select></div>
+<div class="field-group"><span class="field-caption">Patrón</span><select class="field-select" id="edit-pattern"><option value="none">Ninguno</option><option value="dots">Puntos</option><option value="grid">Cuadrícula</option><option value="diagonal">Diagonal</option><option value="weave">Tejido</option><option value="hearts">Corazones</option></select></div>
+<div class="field-group"><span class="field-caption">Estilo botones</span><select class="field-select" id="edit-btn-style"><option value="gradient">Degradado suave</option><option value="soft">Suave</option><option value="solid">Sólido</option><option value="outline">Borde</option><option value="glass">Cristal</option></select></div>
+<div class="field-group"><span class="field-caption">Estilo tarjeta principal</span><select class="field-select" id="edit-card"><option value="soft">Sombra suave</option><option value="flat">Plano</option><option value="border">Borde color</option><option value="glow">Brillo</option></select></div>
+<div class="field-group"><span class="field-caption">Forma avatar</span><select class="field-select" id="edit-avatar-radius"><option value="50%">Redondo</option><option value="22%">Redondeado</option><option value="8px">Cuadrado</option></select></div>
+<div class="field-group"><span class="field-caption">Columnas sucursales</span><select class="field-select" id="edit-branch-cols"><option value="2">2 columnas</option><option value="1">1 columna</option></select></div>
+<div class="field-group"><span class="field-caption">Radio bordes general</span><div class="range-row"><input type="range" id="edit-radius" min="8" max="32" value="24"><span id="radius-val">24px</span></div></div>
+<div class="field-group"><span class="field-caption">Radio botones</span><div class="range-row"><input type="range" id="edit-btn-radius" min="8" max="28" value="16"><span id="btn-radius-val">16px</span></div></div>
+<div class="field-group"><span class="field-caption">Intensidad sombra</span><select class="field-select" id="edit-shadow"><option value="soft">Suave</option><option value="strong">Fuerte</option><option value="none">Sin sombra</option></select></div>
+</div></div>
+
+<div class="editor-block">
+<div class="modal-actions" style="justify-content:flex-start"><button class="btn-primary" id="btn-save">Guardar cambios</button><button class="btn-danger" id="btn-reset">Restablecer</button></div>
+<div class="toast-msg" id="toast"></div>
+<div class="config-file-box"><div class="config-file-top"><span>config.json</span><button class="btn-secondary btn-small" id="btn-copy-config">Copiar</button></div><textarea class="config-code-area" id="config-code" readonly></textarea></div>
+</div>
+</section>
+</div>
+
+<button class="hidden-admin" id="btn-open-auth">•</button>
+<div class="modal-backdrop" id="auth-modal"><div class="modal-card"><div class="modal-title">🔒 Ingresar contraseña</div><input type="password" class="field-input" id="auth-pass" placeholder="Contraseña"><div class="error-msg" id="auth-error"></div><div class="modal-actions"><button class="btn-secondary" id="btn-cancel-auth">Cancelar</button><button class="btn-primary" id="btn-confirm-auth">Entrar</button></div></div></div>
 
 <script>
-const DEFAULT_CONFIG = {
-  title: "Título",
-  handle: "Subtítulo",
-  bio: "Mensaje",
-  banner: "https://picsum.photos/680/175",
-  avatar: "https://picsum.photos/200/200",
-  branchesTitle: "Sucursales",
-  links: [
-    { label: "Título botón 1", sub: "Subtítulo botón 1", url: "https://ejemplo.com/1", icon: "bag", image: "" },
-    { label: "Título botón 2", sub: "Subtítulo botón 2", url: "https://ejemplo.com/2", icon: "tag", image: "" },
-    { label: "Título botón 3", sub: "Subtítulo botón 3", url: "https://ejemplo.com/3", icon: "chat", image: "" }
+const $=id=>document.getElementById(id);
+const DEFAULT_CONFIG={
+  title:"PIMIENTA ROSA", handle:"Mayorista N°1 en San Juan | Tu esencia, tu estilo",
+  bio:"Más de 8.000 clientas nos eligen con 5 estrellas. Ropa para Bebé, Niños y Mujer, con nuevos ingresos todas las semanas.",
+  banner:"https://picsum.photos/680/175", avatar:"https://picsum.photos/200/200",
+  branchesTitle:"Nuestras Sucursales - Villa Krause, San Juan",
+  links:[
+    {label:"Instagram Oficial", sub:"Seguinos y mirá todos los ingresos", url:"https://www.instagram.com/pimienta_rosaaa/", icon:"camera", image:""},
+    {label:"Canal de WhatsApp", sub:"Nuevos ingresos y promos antes que nadie", url:"https://whatsapp.com/channel/0029Vb5e0ML1iUxgEryBDR1W", icon:"chat", image:""},
+    {label:"Contacto", sub:"Escribinos y te atendemos al instante", url:"https://wa.me/5492640000000", icon:"chat", image:""},
+    {label:"Correo", sub:"Consultas y pedidos por mail", url:"mailto:nataliacarmona031@gmail.com", icon:"link", image:""},
+    {label:"Nuevos Ingresos", sub:"Conjunto Deportivo $6.999 | Short $4.999", url:"https://www.instagram.com/pimienta_rosaaa/", icon:"tag", image:""}
   ],
-  branches: [
-    { name: "Sucursal 1", address: "Dirección 1", hours: "Horario 1", mapUrl: "https://maps.google.com", photo: "https://picsum.photos/400/200" },
-    { name: "Sucursal 2", address: "Dirección 2", hours: "Horario 2", mapUrl: "https://maps.google.com", photo: "https://picsum.photos/400/201" }
+  branches:[
+    {name:"Pimienta Rosa - Casa Central", address:"Torino 599 OESTE, Villa Krause, Rawson, San Juan", hours:"Lunes a Sábado 9:30 a 12:00 hs", mapUrl:"https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Torino+599+Villa+Krause", reviewUrl:"https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Torino+599+Villa+Krause+reviews", rating:"5.0", photo:"https://picsum.photos/400/200"},
+    {name:"Pimienta Rosa - Boulevard y San Roque", address:"Boulevard y San Roque, Villa Krause, Rawson, San Juan", hours:"Lunes a Sábado 9:30 a 12:00 hs", mapUrl:"https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Boulevard+San+Roque", reviewUrl:"https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Boulevard+San+Roque+reviews", rating:"5.0", photo:"https://picsum.photos/400/201"},
+    {name:"Pimienta Rosa Boutique", address:"Boulevard y Mendoza, Villa Krause, Rawson, San Juan", hours:"Lunes a Sábado 9:30 a 12:00 hs", mapUrl:"https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Boutique+Boulevard+Mendoza", reviewUrl:"https://www.google.com/maps/search/?api=1&query=Pimienta+Rosa+Boutique+reviews", rating:"5.0", photo:"https://picsum.photos/400/202"}
   ],
-  theme: { primary: "#111111", bg: "#f5f5f5", pattern: "dots", btnStyle: "soft" }
+  theme:{primary:"#D81B60", accent:"#FF8FB1", bg:"#FFF5F7", text:"#1F1A1C", pattern:"dots", btnStyle:"gradient", card:"soft", font:"'Inter',sans-serif", titleFont:"'Poppins',sans-serif", avatarRadius:"50%", branchCols:"2", radius:24, btnRadius:16, shadow:"soft"}
 };
-const PASSWORD = "@Link1234tree#";
-let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-try { const saved = localStorage.getItem("linktree-config"); if (saved) config = { ...JSON.parse(JSON.stringify(DEFAULT_CONFIG)), ...JSON.parse(saved) }; } catch(e){}
-const $ = id => document.getElementById(id);
-const icons = ["store","bag","tag","heart","pin","clock","chat","camera","palette","link"];
+let config=JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+try{ const saved=localStorage.getItem("linktree-config"); if(saved) config={...JSON.parse(JSON.stringify(DEFAULT_CONFIG)), ...JSON.parse(saved), theme:{...DEFAULT_CONFIG.theme, ...(JSON.parse(saved).theme||{})}} }catch(e){}
+
 function applyTheme(){
-  const r = document.documentElement.style;
-  r.setProperty("--primary", config.theme.primary);
-  r.setProperty("--bg", config.theme.bg);
-  document.body.dataset.pattern = config.theme.pattern;
-  document.body.dataset.btnStyle = config.theme.btnStyle;
+  const r=document.documentElement.style;
+  r.setProperty('--primary',config.theme.primary); r.setProperty('--primary-dark',config.theme.primary);
+  r.setProperty('--accent',config.theme.accent); r.setProperty('--bg',config.theme.bg); r.setProperty('--text',config.theme.text);
+  r.setProperty('--radius',config.theme.radius+'px'); r.setProperty('--btn-radius',config.theme.btnRadius+'px');
+  r.setProperty('--avatar-radius',config.theme.avatarRadius); r.setProperty('--branch-cols',config.theme.branchCols);
+  r.setProperty('--font',config.theme.font); r.setProperty('--title-font',config.theme.titleFont);
+  if(config.theme.shadow==='none') r.setProperty('--shadow','none');
+  if(config.theme.shadow==='strong') r.setProperty('--shadow','0 24px 60px rgba(0,0,0,.18)');
+  if(config.theme.shadow==='soft') r.setProperty('--shadow','0 18px 40px rgba(216,27,96,.10)');
+  document.body.dataset.pattern=config.theme.pattern; document.body.dataset.btnStyle=config.theme.btnStyle; document.body.dataset.card=config.theme.card;
 }
+function iconSVG(name){ return `<svg width="18" height="18" fill="currentColor"><use href="#sym-${name||'link'}"/></svg>`; }
 function render(){
   applyTheme();
-  $("view-title").textContent = config.title;
-  $("view-handle").textContent = config.handle;
-  $("view-bio").textContent = config.bio;
-  $("view-banner").src = config.banner;
-  $("view-avatar").src = config.avatar;
-  $("view-branches-title").textContent = config.branchesTitle;
-  document.title = config.title + " — Linktree";
-  const linksEl = $("view-links"); linksEl.innerHTML = "";
-  config.links.forEach(l => {
-    const a = document.createElement("a"); a.className = "link-item"; a.href = l.url; a.target = "_blank"; a.rel = "noopener";
-    a.innerHTML = `<span class="link-left"><span class="link-symbol"><svg width="18" height="18" fill="currentColor"><use href="#sym-${l.icon || "link"}"></use></svg></span><span class="link-text-wrap"><span class="link-label">${l.label}</span><br><span class="link-sub">${l.sub || ""}</span></span></span><span class="link-arrow"><svg width="18" height="18" fill="currentColor"><use href="#sym-arrow"></use></svg></span>`;
-    linksEl.appendChild(a);
-  });
-  const brEl = $("view-branches"); brEl.innerHTML = "";
-  config.branches.forEach(b => {
-    const d = document.createElement("div"); d.className = "branch-card";
-    d.innerHTML = `<img class="branch-photo" src="${b.photo}" alt=""><div class="branch-content"><div class="branch-name"><svg width="14" height="14" fill="currentColor"><use href="#sym-pin"></use></svg>${b.name}</div><div class="branch-line"><svg width="13" height="13" fill="currentColor"><use href="#sym-pin"></use></svg>${b.address}</div><div class="branch-line"><svg width="13" height="13" fill="currentColor"><use href="#sym-clock"></use></svg>${b.hours}</div><a class="branch-map-btn" href="${b.mapUrl}" target="_blank">Ver en mapa</a></div>`;
-    brEl.appendChild(d);
-  });
-  $("config-code").value = JSON.stringify(config, null, 2);
+  $("view-title").textContent=config.title; $("view-handle").textContent=config.handle; $("view-bio").textContent=config.bio;
+  $("view-banner").src=config.banner; $("view-avatar").src=config.avatar; $("view-branches-title").textContent=config.branchesTitle;
+  $("view-links").innerHTML=config.links.map(l=>`<a class="link-item" href="${l.url}" target="_blank" rel="noopener">${l.image?`<img class="link-thumb" src="${l.image}">`:`<span class="link-symbol">${iconSVG(l.icon)}</span>`}<span class="link-left" style="flex:1"><span class="link-text-wrap"><div class="link-label">${l.label}</div><div class="link-sub">${l.sub}</div></span></span><span class="link-arrow"><svg width="18" height="18" fill="currentColor"><use href="#sym-arrow"/></svg></span></a>`).join('');
+  $("view-branches").innerHTML=config.branches.map(b=>`<article class="branch-card"><img class="branch-photo" src="${b.photo}"><div class="branch-content"><div class="branch-name"><svg width="15" height="15" fill="currentColor"><use href="#sym-pin"/></svg>${b.name}</div><div class="branch-rating"><span class="stars">★★★★★</span> <span>${b.rating||'5.0'} • Ver reseñas</span></div><div class="branch-line"><svg width="13" height="13" fill="currentColor"><use href="#sym-pin"/></svg>${b.address}</div><div class="branch-line"><svg width="13" height="13" fill="currentColor"><use href="#sym-clock"/></svg>${b.hours}</div><div class="branch-actions"><a class="branch-map-btn" href="${b.mapUrl}" target="_blank">📍 Cómo llegar</a><a class="branch-rate-btn" href="${b.reviewUrl||b.mapUrl}" target="_blank">⭐ Calificar</a></div></div></article>`).join('');
+  $("config-code").value=JSON.stringify(config,null,2);
 }
 function renderEditor(){
-  $("edit-title").value = config.title;
-  $("edit-handle").value = config.handle;
-  $("edit-bio").value = config.bio;
-  $("edit-banner").value = config.banner;
-  $("edit-avatar").value = config.avatar;
-  $("edit-branches-title").value = config.branchesTitle;
-  $("edit-primary").value = config.theme.primary;
-  $("edit-bg").value = config.theme.bg;
-  $("edit-pattern").value = config.theme.pattern;
-  $("edit-btn-style").value = config.theme.btnStyle;
-  const le = $("links-editor"); le.innerHTML = "";
-  config.links.forEach((l,i)=>{
-    const d=document.createElement("div"); d.className="item-editor-card";
-    d.innerHTML=`<div class="item-editor-top"><span>Botón ${i+1}</span><button type="button" class="btn-danger btn-small" data-del-link="${i}">Eliminar</button></div>
-    <div class="form-grid-2">
-      <div class="field-group"><span class="field-caption">Título botón</span><input class="field-input" data-link="label" data-i="${i}" value="${l.label}"></div>
-      <div class="field-group"><span class="field-caption">Subtítulo botón</span><input class="field-input" data-link="sub" data-i="${i}" value="${l.sub||""}"></div>
-      <div class="field-group"><span class="field-caption">Enlace</span><input class="field-input" data-link="url" data-i="${i}" value="${l.url}"></div>
-      <div class="field-group"><span class="field-caption">Icono</span><select class="field-select" data-link="icon" data-i="${i}">${icons.map(ic=>`<option value="${ic}" ${ic===l.icon?"selected":""}>${ic}</option>`).join("")}</select></div>
-    </div>`;
-    le.appendChild(d);
-  });
-  const be=$("branches-editor"); be.innerHTML="";
-  config.branches.forEach((b,i)=>{
-    const d=document.createElement("div"); d.className="item-editor-card";
-    d.innerHTML=`<div class="item-editor-top"><span>Sucursal ${i+1}</span><button type="button" class="btn-danger btn-small" data-del-branch="${i}">Eliminar</button></div>
-    <div class="form-grid-2">
-      <div class="field-group"><span class="field-caption">Nombre</span><input class="field-input" data-branch="name" data-i="${i}" value="${b.name}"></div>
-      <div class="field-group"><span class="field-caption">Dirección</span><input class="field-input" data-branch="address" data-i="${i}" value="${b.address}"></div>
-      <div class="field-group"><span class="field-caption">Horario</span><input class="field-input" data-branch="hours" data-i="${i}" value="${b.hours}"></div>
-      <div class="field-group"><span class="field-caption">Link mapa</span><input class="field-input" data-branch="mapUrl" data-i="${i}" value="${b.mapUrl}"></div>
-      <div class="field-group" style="grid-column:1/-1"><span class="field-caption">Foto</span><input class="field-input" data-branch="photo" data-i="${i}" value="${b.photo}"></div>
-    </div>`;
-    be.appendChild(d);
-  });
+  $("edit-title").value=config.title; $("edit-handle").value=config.handle; $("edit-bio").value=config.bio;
+  $("edit-banner").value=config.banner; $("edit-avatar").value=config.avatar; $("edit-branches-title").value=config.branchesTitle;
+  $("edit-primary").value=config.theme.primary; $("edit-accent").value=config.theme.accent; $("edit-bg").value=config.theme.bg; $("edit-text").value=config.theme.text;
+  $("edit-pattern").value=config.theme.pattern; $("edit-btn-style").value=config.theme.btnStyle; $("edit-card").value=config.theme.card;
+  $("edit-font").value=config.theme.font; $("edit-title-font").value=config.theme.titleFont; $("edit-avatar-radius").value=config.theme.avatarRadius; $("edit-branch-cols").value=config.theme.branchCols;
+  $("edit-radius").value=config.theme.radius; $("radius-val").textContent=config.theme.radius+'px';
+  $("edit-btn-radius").value=config.theme.btnRadius; $("btn-radius-val").textContent=config.theme.btnRadius+'px'; $("edit-shadow").value=config.theme.shadow;
+  $("links-editor").innerHTML=config.links.map((l,i)=>`<div class="item-editor-card"><div class="item-editor-top"><span>Botón ${i+1}</span><button class="btn-danger btn-small" onclick="delLink(${i})">Eliminar</button></div><div class="form-grid-2"><div class="field-group"><span class="field-caption">Título</span><input class="field-input" data-link="${i}" data-k="label" value="${l.label}"></div><div class="field-group"><span class="field-caption">Subtítulo</span><input class="field-input" data-link="${i}" data-k="sub" value="${l.sub}"></div><div class="field-group"><span class="field-caption">URL</span><input class="field-input" data-link="${i}" data-k="url" value="${l.url}"></div><div class="field-group"><span class="field-caption">Icono</span><select class="field-select" data-link="${i}" data-k="icon"><option ${l.icon==='camera'?'selected':''} value="camera">Cámara</option><option ${l.icon==='chat'?'selected':''} value="chat">Chat</option><option ${l.icon==='bag'?'selected':''} value="bag">Bolsa</option><option ${l.icon==='tag'?'selected':''} value="tag">Etiqueta</option><option ${l.icon==='heart'?'selected':''} value="heart">Corazón</option><option ${l.icon==='store'?'selected':''} value="store">Tienda</option><option ${l.icon==='link'?'selected':''} value="link">Link</option></select></div></div></div>`).join('');
+  $("branches-editor").innerHTML=config.branches.map((b,i)=>`<div class="item-editor-card"><div class="item-editor-top"><span>Sucursal ${i+1}</span><button class="btn-danger btn-small" onclick="delBranch(${i})">Eliminar</button></div><div class="form-grid-2"><div class="field-group"><span class="field-caption">Nombre</span><input class="field-input" data-branch="${i}" data-k="name" value="${b.name}"></div><div class="field-group"><span class="field-caption">Rating (ej: 5.0)</span><input class="field-input" data-branch="${i}" data-k="rating" value="${b.rating||'5.0'}"></div><div class="field-group" style="grid-column:1/-1"><span class="field-caption">Dirección</span><input class="field-input" data-branch="${i}" data-k="address" value="${b.address}"></div><div class="field-group"><span class="field-caption">Horario</span><input class="field-input" data-branch="${i}" data-k="hours" value="${b.hours}"></div><div class="field-group"><span class="field-caption">Foto URL</span><input class="field-input" data-branch="${i}" data-k="photo" value="${b.photo}"></div><div class="field-group"><span class="field-caption">Link Maps</span><input class="field-input" data-branch="${i}" data-k="mapUrl" value="${b.mapUrl}"></div><div class="field-group"><span class="field-caption">⭐ Link para Calificar (Google Reviews)</span><input class="field-input" data-branch="${i}" data-k="reviewUrl" value="${b.reviewUrl||''}" placeholder="https://g.page/.../review"></div></div></div>`).join('');
+  document.querySelectorAll('[data-link]').forEach(el=>el.oninput=e=>{ config.links[+el.dataset.link][el.dataset.k]=el.value; render(); });
+  document.querySelectorAll('[data-branch]').forEach(el=>el.oninput=e=>{ config.branches[+el.dataset.branch][el.dataset.k]=el.value; render(); });
 }
-document.addEventListener("input", e=>{
-  const t=e.target;
-  if(t.dataset.link) config.links[+t.dataset.i][t.dataset.link]=t.value;
-  if(t.dataset.branch) config.branches[+t.dataset.i][t.dataset.branch]=t.value;
-});
-document.addEventListener("click", e=>{
-  const dl=e.target.closest("[data-del-link]"); if(dl){ config.links.splice(+dl.dataset.delLink,1); renderEditor(); return; }
-  const db=e.target.closest("[data-del-branch]"); if(db){ config.branches.splice(+db.dataset.delBranch,1); renderEditor(); return; }
-});
-$("btn-open-auth").onclick=()=>{ $("auth-modal").classList.add("open"); $("auth-error").textContent=""; $("auth-pass").value=""; $("auth-pass").focus(); };
-$("btn-cancel-auth").onclick=()=> $("auth-modal").classList.remove("open");
-$("btn-confirm-auth").onclick=()=>{
-  if($("auth-pass").value===PASSWORD){ $("auth-modal").classList.remove("open"); $("editor-panel").classList.add("active"); renderEditor(); }
-  else $("auth-error").textContent="Contraseña incorrecta";
-};
-$("btn-lock-panel").onclick=()=> $("editor-panel").classList.remove("active");
-$("btn-add-link").onclick=()=>{ config.links.push({label:"Título botón", sub:"Subtítulo botón", url:"https://ejemplo.com", icon:"link", image:""}); renderEditor(); };
-$("btn-add-branch").onclick=()=>{ config.branches.push({name:"Sucursal", address:"Dirección", hours:"Horario", mapUrl:"https://maps.google.com", photo:"https://picsum.photos/400/200"}); renderEditor(); };
+window.delLink=i=>{ config.links.splice(i,1); renderEditor(); render(); };
+window.delBranch=i=>{ config.branches.splice(i,1); renderEditor(); render(); };
+$("btn-open-auth").onclick=()=>{ $("auth-modal").classList.add('open'); };
+$("btn-cancel-auth").onclick=()=>$("auth-modal").classList.remove('open');
+$("btn-confirm-auth").onclick=()=>{ if($("auth-pass").value==="pimienta123"){ $("auth-modal").classList.remove('open'); $("editor-panel").classList.add('active'); renderEditor(); } else $("auth-error").textContent="Contraseña incorrecta"; };
+$("btn-lock-panel").onclick=()=>$("editor-panel").classList.remove('active');
+$("btn-add-link").onclick=()=>{ config.links.push({label:"Nuevo botón", sub:"Subtítulo", url:"https://ejemplo.com", icon:"link", image:""}); renderEditor(); };
+$("btn-add-branch").onclick=()=>{ config.branches.push({name:"Nueva Sucursal", address:"Dirección", hours:"Horario", mapUrl:"https://maps.google.com", reviewUrl:"", rating:"5.0", photo:"https://picsum.photos/400/200"}); renderEditor(); };
+$("edit-radius").oninput=e=>$("radius-val").textContent=e.target.value+'px';
+$("edit-btn-radius").oninput=e=>$("btn-radius-val").textContent=e.target.value+'px';
 $("btn-save").onclick=()=>{
   config.title=$("edit-title").value; config.handle=$("edit-handle").value; config.bio=$("edit-bio").value;
   config.banner=$("edit-banner").value; config.avatar=$("edit-avatar").value; config.branchesTitle=$("edit-branches-title").value;
-  config.theme.primary=$("edit-primary").value; config.theme.bg=$("edit-bg").value; config.theme.pattern=$("edit-pattern").value; config.theme.btnStyle=$("edit-btn-style").value;
-  localStorage.setItem("linktree-config", JSON.stringify(config));
-  render(); $("toast").textContent="Guardado correctamente ✓";
+  config.theme.primary=$("edit-primary").value; config.theme.accent=$("edit-accent").value; config.theme.bg=$("edit-bg").value; config.theme.text=$("edit-text").value;
+  config.theme.pattern=$("edit-pattern").value; config.theme.btnStyle=$("edit-btn-style").value; config.theme.card=$("edit-card").value;
+  config.theme.font=$("edit-font").value; config.theme.titleFont=$("edit-title-font").value; config.theme.avatarRadius=$("edit-avatar-radius").value; config.theme.branchCols=$("edit-branch-cols").value;
+  config.theme.radius=+ $("edit-radius").value; config.theme.btnRadius=+ $("edit-btn-radius").value; config.theme.shadow=$("edit-shadow").value;
+  localStorage.setItem("linktree-config", JSON.stringify(config)); render(); $("toast").textContent="Guardado correctamente ✓";
 };
-$("btn-reset").onclick=()=>{ if(confirm("¿Restablecer valores por defecto?")){ config=JSON.parse(JSON.stringify(DEFAULT_CONFIG)); localStorage.removeItem("linktree-config"); render(); renderEditor(); } };
+$("btn-reset").onclick=()=>{ if(confirm("¿Restablecer?")){ config=JSON.parse(JSON.stringify(DEFAULT_CONFIG)); localStorage.removeItem("linktree-config"); render(); renderEditor(); } };
 $("btn-copy-config").onclick=()=>{ navigator.clipboard.writeText($("config-code").value); $("toast").textContent="Config copiada ✓"; };
 render();
 </script>
